@@ -77,8 +77,7 @@ def trainImages():
 
     test_loss, test_acc = model.evaluate(test_images,  test_labels, verbose=2)
 
-    logger.info('test_acc: ' + test_acc)
+    logger.info('test_acc: ' + str(test_acc))
     logger.info('The training logic is finished.')
-
 
 trainImages()
