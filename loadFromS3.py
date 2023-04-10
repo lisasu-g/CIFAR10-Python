@@ -7,7 +7,7 @@ from keras.datasets.cifar import load_batch
 from keras.utils.data_utils import get_file
 from tensorflow.python.util.tf_export import keras_export
 
-s3 = boto3.resource('s3')
+s3 = boto3.client('s3')
 bucket_name = '775-bucket'
 local_path = 'datasets/cifar-10-batches-py'
 
