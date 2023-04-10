@@ -9,21 +9,19 @@ from tensorflow.python.util.tf_export import keras_export
 
 s3 = boto3.client('s3')
 bucket_name = '775-bucket'
-local_path = 'datasets/cifar-10-batches-py'
-
+local_folder_path = './datasets/cifar-10-batches-py'
 
 
 def download_from_s3():
-    if not os.path.exists(local_path):
-        os.makedirs(local_path)
+    if not os.path.exists(local_folder_path):
+        os.makedirs(local_folder_path)
 
-    bucket = s3.Bucket(bucket_name)
+    objects = s3.list_objects(Bucket=bucket_name)['Contents']
 
-    for obj in bucket.objects.all():
-        filename = obj.key.split('/')[-1]
-        # bucket.download_file(obj.key, filename)
-        s3.download_file(bucket_name, obj.key, os.path.join(local_path, filename))
-        print(f"Downloaded {obj.key}")
+    for obj in objects:
+        local_file_path = os.path.join(local_folder_path, obj['Key'])        
+        s3.download_file(bucket_name, obj['Key'], local_file_path)
+        print('file download to path : ', local_file_path)
 
 def load_local_data():
     path = "./datasets/cifar-10-batches-py"
