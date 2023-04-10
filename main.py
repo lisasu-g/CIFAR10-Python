@@ -80,3 +80,5 @@ def trainImages():
     logger.info('test_acc: ' + test_acc)
     logger.info('The training logic is finished.')
 
+
+trainImages()
