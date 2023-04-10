@@ -2,17 +2,23 @@ import tensorflow as tf
 
 from tensorflow.keras import datasets, layers, models
 
-from loadLocal import *
+from loadFromS3 import *
 
 import matplotlib.pyplot as plt
 
-# 使用自动下载的数据集
+# use downloaded dataset from FTP server and load data
 # (train_images, train_labels), (test_images, test_labels) =  tf.keras.datasets.cifar10.load_data()
 
+# download datas from S3
+download_from_s3()
+# use locally loaded data
 (train_images, train_labels), (test_images, test_labels) =  load_local_data()
+
+
 train_images, test_images = train_images / 255.0, test_images / 255.0
 
-# 验证数据
+
+# verify data
 # class_names = ['airplane', 'automobile', 'bird', 'cat', 'deer',
 #                'dog', 'frog', 'horse', 'ship', 'truck']
 
@@ -38,12 +44,11 @@ model.add(layers.Conv2D(64, (3, 3), activation='relu'))
 
 # model.summary()
 
-# 增加 Dense 层
+# add dense layer
 model.add(layers.Flatten())
 model.add(layers.Dense(64, activation='relu'))
 model.add(layers.Dense(10))
 
-# 编译并训练模型
 model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
@@ -52,7 +57,6 @@ history = model.fit(train_images, train_labels, epochs=10,
                     validation_data=(test_images, test_labels))
 
 
-# 评估模型
 plt.plot(history.history['accuracy'], label='accuracy')
 plt.plot(history.history['val_accuracy'], label = 'val_accuracy')
 plt.xlabel('Epoch')
