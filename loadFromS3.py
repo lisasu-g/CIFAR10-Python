@@ -12,6 +12,8 @@ bucket_name = '775-bucket'
 local_folder_path = './datasets/cifar-10-batches-py'
 
 
+
+
 def download_from_s3():
     if not os.path.exists(local_folder_path):
         os.makedirs(local_folder_path)
