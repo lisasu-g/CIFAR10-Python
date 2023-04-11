@@ -8,11 +8,13 @@ from keras.utils.data_utils import get_file
 from tensorflow.python.util.tf_export import keras_export
 
 s3 = boto3.client('s3')
+# s3 = boto3.client(
+#     service_name='s3',
+#     endpoint_url='https://bucket.vpce-0dc90772aeda024fb-m0bi39ow.s3.us-east-2.vpce.amazonaws.com'
+#     )
+
 bucket_name = '775-bucket'
 local_folder_path = './datasets/cifar-10-batches-py'
-
-
-
 
 def download_from_s3():
     if not os.path.exists(local_folder_path):
